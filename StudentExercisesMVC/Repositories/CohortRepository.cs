@@ -34,7 +34,7 @@ namespace StudentExercisesMVC.Repositories
                 {
                     cmd.CommandText = @"
                             SELECT c.Id,
-                                c.Name
+                                c.Designation
                             FROM Cohort c
                         ";
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -45,7 +45,7 @@ namespace StudentExercisesMVC.Repositories
                         Cohort cohort = new Cohort
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                            Name = reader.GetString(reader.GetOrdinal("Designation"))
                         };
 
                         cohorts.Add(cohort);
@@ -65,7 +65,7 @@ namespace StudentExercisesMVC.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Cohort (Name)         
+                    cmd.CommandText = @"INSERT INTO Cohort (Designation)         
                                          OUTPUT INSERTED.Id                                                       
                                          VALUES (@cohortName)";
                     cmd.Parameters.Add(new SqlParameter("@cohortName", cohort.Name));
@@ -108,7 +108,7 @@ namespace StudentExercisesMVC.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"UPDATE Cohort
-                                            SET Name = @cohortName
+                                            SET Designation = @cohortName
                                             WHERE Id = @id";
                     cmd.Parameters.Add(new SqlParameter("@cohortName", cohort.Name));
                     cmd.Parameters.Add(new SqlParameter("@id", cohort.Id));
@@ -128,7 +128,7 @@ namespace StudentExercisesMVC.Repositories
                 {
                     cmd.CommandText = @"
                             SELECT c.Id,
-                                c.Name,
+                                c.Designation,
                             FROM Cohort c WHERE c.Id = @Id
                         ";
                     cmd.Parameters.Add(new SqlParameter("@Id", id));
@@ -139,7 +139,7 @@ namespace StudentExercisesMVC.Repositories
                         cohort = new Cohort
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                            Name = reader.GetString(reader.GetOrdinal("Designation"))
                         };
                     }
 

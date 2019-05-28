@@ -33,7 +33,7 @@ namespace StudentExercisesMVC.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            SELECT e.Id, e.Name, e.Language
+                            SELECT e.Id, e.Title, e.ExerciseLanguage
                             FROM Exercise e
                         ";
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -44,8 +44,8 @@ namespace StudentExercisesMVC.Repositories
                         Exercise exercise = new Exercise
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
-                            Language = reader.GetString(reader.GetOrdinal("Language"))
+                            Name = reader.GetString(reader.GetOrdinal("Title")),
+                            Language = reader.GetString(reader.GetOrdinal("ExerciseLanguage"))
                         };
 
                         exercises.Add(exercise);
@@ -65,7 +65,7 @@ namespace StudentExercisesMVC.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Exercise (Name, Language)         
+                    cmd.CommandText = @"INSERT INTO Exercise (Title, ExerciseLanguage)         
                                          OUTPUT INSERTED.Id                                                       
                                          VALUES (@Name, @Language)";
                     cmd.Parameters.Add(new SqlParameter("@Name", exercise.Name));

@@ -34,7 +34,7 @@ namespace StudentExercisesMVC.Repositories
                                 s.SlackHandle,
                                 s.CohortId,
                                 c.Id CohortPk,
-                                c.Name
+                                c.Designation
                             FROM Student s 
                             JOIN Cohort c ON s.CohortId = c.Id
                         ";
@@ -65,7 +65,7 @@ namespace StudentExercisesMVC.Repositories
                             Cohort = new Cohort
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("CohortPk")),
-                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                                Name = reader.GetString(reader.GetOrdinal("Designation"))
                             }
                         };
 
@@ -164,13 +164,13 @@ namespace StudentExercisesMVC.Repositories
                                 s.SlackHandle,
                                 s.CohortId,
                                 c.Id CohortPk,
-                                c.Name,
+                                c.Designation,
                                 e.Id ExerciseId,
-                                e.Name ExerciseName,
-                                e.[Language]
+                                e.Title ExerciseTitle,
+                                e.ExerciseLanguage
                             FROM Student s 
                             JOIN Cohort c ON s.CohortId = c.Id
-                            LEFT JOIN StudentExercise se ON se.StudentId = s.Id
+                            LEFT JOIN StudentExercises se ON se.StudentId = s.Id
                             LEFT JOIN Exercise e ON e.Id = se.ExerciseId
                             WHERE s.Id = @StudentId
                         ";
@@ -191,7 +191,7 @@ namespace StudentExercisesMVC.Repositories
                                 Cohort = new Cohort
                                 {
                                     Id = reader.GetInt32(reader.GetOrdinal("CohortPk")),
-                                    Name = reader.GetString(reader.GetOrdinal("Name"))
+                                    Name = reader.GetString(reader.GetOrdinal("Designation"))
                                 }
                             };
                         }
@@ -201,8 +201,8 @@ namespace StudentExercisesMVC.Repositories
                             student.AssignedExercises.Add(new Exercise
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("ExerciseId")),
-                                Name = reader.GetString(reader.GetOrdinal("ExerciseName")),
-                                Language = reader.GetString(reader.GetOrdinal("Language"))
+                                Name = reader.GetString(reader.GetOrdinal("ExerciseTitle")),
+                                Language = reader.GetString(reader.GetOrdinal("ExerciseLanguage"))
                             });
                         }
                     }
