@@ -28,20 +28,21 @@ namespace StudentExercisesMVC.Repositories
         public static List<Instructor> GetInstructors(string orderBy, string sortDirection)
         {
             string sql = @"
-                            SELECT s.Id,
+                            SELECT i.Id,
                                 i.FirstName,
                                 i.LastName,
                                 i.SlackHandle,
+                                i.Specialty,
                                 i.CohortId,
                                 c.Id CohortPk,
                                 c.Designation
                             FROM Instructor i 
-                            JOIN Cohort c ON s.CohortId = c.Id
+                            JOIN Cohort c ON i.CohortId = c.Id
                         ";
 
             if (orderBy != null)
             {
-                sql += $"ORDER BY s.{orderBy} {sortDirection}";
+                sql += $"ORDER BY i.{orderBy} {sortDirection}";
             }
 
             using (SqlConnection conn = Connection)
